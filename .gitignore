@@ -1,0 +1,12 @@
+# 运行时产物
+*.log
+output*.json
+!data/*.json
+
+# 工具二进制与发布包（从上游 release 下载，不入库）
+wx_video_download*
+*.zip
+data.db
+
+# 系统文件
+.DS_Store
