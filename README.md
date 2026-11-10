@@ -33,7 +33,11 @@ JS 注入（hook XHR/fetch，截获接口数据，注入下载按钮）
 
 ## 快速开始
 
-详细步骤见 [docs/setup.md](docs/setup.md)。
+文档导航：
+
+- [docs/deploy-machine.md](docs/deploy-machine.md) — **部署机器连接手册**（目标机信息、SSH/屏幕共享、连通性检查、部署前置条件、多项目共存）
+- [docs/setup.md](docs/setup.md) — 环境搭建与运行手册
+- [docs/api.md](docs/api.md) — API 使用手册
 
 ```bash
 # 1. 下载发布包（v260907 有 darwin_arm64）
