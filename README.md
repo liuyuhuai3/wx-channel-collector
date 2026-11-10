@@ -36,6 +36,7 @@ JS 注入（hook XHR/fetch，截获接口数据，注入下载按钮）
 文档导航：
 
 - [docs/deploy-machine.md](docs/deploy-machine.md) — **部署机器连接手册**（目标机信息、SSH/屏幕共享、连通性检查、部署前置条件、多项目共存）
+- [docs/rollback-wechat.md](docs/rollback-wechat.md) — **微信升级到 4.2 后的回滚方案**（降级到 4.1.15、关闭自动更新、风险与验证清单）
 - [docs/setup.md](docs/setup.md) — 环境搭建与运行手册
 - [docs/api.md](docs/api.md) — API 使用手册
 
@@ -71,13 +72,17 @@ python3 scripts/collect_channels.py 厦门广电 --limit 5
 | 组件 | 版本 | 状态 |
 |------|------|------|
 | 微信 macOS 客户端 | **4.1.15** | ✅ 本项目实测通过的版本（唯一验证过的版本） |
+| 微信 macOS **4.2** | 4.2.x（如 4.2.0.13） | ❌ **不可用**：注入按钮消失，采集中断（上游 issue #603，多用户确认）。回滚方案见 [rollback-wechat.md](docs/rollback-wechat.md) |
 | 微信 macOS 4.1.x 其他小版本 | 4.1.x | ⚠️ 未验证。上游 FAQ 将「按钮位置与版本适配」列为注入失败原因之一，小版本升级后需重新验证注入 |
 | 微信 Windows 客户端 | — | ⚠️ 未验证（上游主要面向 Windows，但本项目仅在 macOS 实测） |
-| 采集工具 | **v260907**（darwin_arm64） | ✅ 使用中的版本 |
+| 采集工具 | **v260907**（darwin_arm64） | ✅ 当前使用；**v261106**（2026-11-06）已发布，修复新版微信页面白屏，建议升级 |
 | 操作系统 | macOS 26.6.2 / Apple M5 | ✅ 验证环境 |
 | 上游官方支持版本范围 | — | ❌ **上游未公布**，README 与 docs 中均无版本兼容清单 |
 
-**结论**：`微信 4.1.15 + 工具 v260907 + macOS(Apple Silicon)` 是唯一被验证可用的组合。升级微信前请先确认注入是否仍生效（判据见 [setup.md](docs/setup.md) 第 5 节），并保留降级安装包。
+**结论**：`微信 4.1.15 + 工具 v260907/v261106 + macOS(Apple Silicon)` 是唯一被验证可用的组合。
+
+- **微信已被升到 4.2** → 按 [docs/rollback-wechat.md](docs/rollback-wechat.md) 回滚到 4.1.15 并关闭自动更新（4.1.15 universal 安装包已备份至 `~/Backups/WeChat_4.1.15_universal.app.zip`）。
+- **尚未升级** → 立刻关闭微信自动更新，保留旧版安装包。
 
 ## 已知限制
 
