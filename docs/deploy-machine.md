@@ -114,7 +114,9 @@ echo "== 芯片与系统 =="; uname -m; sw_vers -productVersion
 echo "== 磁盘余量 ==";   df -h /
 echo "== 内存 ==";       sysctl -n hw.memsize
 echo "== 已占用端口 =="; lsof -nP -iTCP -sTCP:LISTEN | head -20
-echo "== 微信是否安装 =="; ls -d /Applications/WeChat.app 2>/dev/null || echo 未安装
+echo "== 微信是否安装 =="; ls -d /Applications/WeChat.app 2>/dev/null \
+  && defaults read /Applications/WeChat.app/Contents/Info.plist CFBundleShortVersionString 2>/dev/null \
+  || echo 未安装
 echo "== 是否已有部署 =="; pgrep -lf wx_video_download; ls -d ~/wx_test /tmp/wx_test 2>/dev/null
 echo "== 证书是否已装 =="; security find-certificate -c SunnyNet /Library/Keychains/System.keychain >/dev/null 2>&1 \
   && echo 已装 || echo 未装
@@ -130,7 +132,7 @@ echo "== 防睡眠设置 =="; pmset -g | grep -E "sleep|displaysleep|womp"
 | 磁盘余量 | **≥ 50GB**（按 0.3–1GB/天视频增长，留 1–2 个月缓冲） | 配置视频自动清理，或改存外置盘 |
 | 内存 | ≥ 4GB 空闲即可（工具常驻仅 100–200MB） | — |
 | 端口 2022/2023 | 空闲 | 改 `config.yaml` 里的 `api.port` / `proxy.port` |
-| 微信 | 已安装并**已登录** | 屏幕共享扫码登录 |
+| 微信 | 已安装并**已登录**；版本建议对齐 **4.1.15**（本项目唯一实测通过的版本，上游未公布适配范围） | 屏幕共享扫码登录；版本不符先按 README「版本适配」评估 |
 | 深度睡眠 | 关闭（否则代理中断、注入失效） | `sudo pmset -a sleep 0 disksleep 0` |
 | 已有部署 | 确认是否残留旧进程/旧证书 | 有则先停进程、复用证书 |
 

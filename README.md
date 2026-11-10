@@ -66,6 +66,19 @@ python3 scripts/collect_channels.py 厦门广电 --limit 5
 - `POST /api/channels/decrypt` → 解密视频文件（配合 media 里的 `decodeKey`）
 - `GET /api/mp/*` → 公众号文章相关（需 `mp.enabled: true`）
 
+## 版本适配
+
+| 组件 | 版本 | 状态 |
+|------|------|------|
+| 微信 macOS 客户端 | **4.1.15** | ✅ 本项目实测通过的版本（唯一验证过的版本） |
+| 微信 macOS 4.1.x 其他小版本 | 4.1.x | ⚠️ 未验证。上游 FAQ 将「按钮位置与版本适配」列为注入失败原因之一，小版本升级后需重新验证注入 |
+| 微信 Windows 客户端 | — | ⚠️ 未验证（上游主要面向 Windows，但本项目仅在 macOS 实测） |
+| 采集工具 | **v260907**（darwin_arm64） | ✅ 使用中的版本 |
+| 操作系统 | macOS 26.6.2 / Apple M5 | ✅ 验证环境 |
+| 上游官方支持版本范围 | — | ❌ **上游未公布**，README 与 docs 中均无版本兼容清单 |
+
+**结论**：`微信 4.1.15 + 工具 v260907 + macOS(Apple Silicon)` 是唯一被验证可用的组合。升级微信前请先确认注入是否仍生效（判据见 [setup.md](docs/setup.md) 第 5 节），并保留降级安装包。
+
 ## 已知限制
 
 1. **直链时效**：`token/sign` 绑定会话，过期需重新调 feed/list 刷新。
